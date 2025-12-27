@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register | Café System</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: url('RegistrationBG.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      color: #222;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 20px;
+      position: relative;
+      left: 250px;
+    }
+
+    .registration-container {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 15px;
+      width: 450px;
+      padding: 15px 20px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .tab-header {
+      display: flex;
+      margin-bottom: 15px;
+    }
+
+    .tab-header div {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.05);
+      color: #333;
+      font-weight: bold;
+      transition: background 0.3s;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .tab-header .active {
+      background: #333;
+      color: white;
+    }
+
+    form {
+      display: none;
+      flex-direction: column;
+      animation: fadeIn 0.3s ease;
+    }
+
+    form.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    label {
+      margin: 8px 0 4px;
+      font-size: 0.9rem;
+      color: #111;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #222;
+      font-size: 0.9rem;
+    }
+
+    input::placeholder {
+      color: rgba(100, 100, 100, 0.7);
+    }
+
+    button {
+      padding: 10px;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.7s, color 0.5s;
+    }
+
+    button:hover {
+      background: white;
+      color: #333;
+    }
+
+    .login-link {
+      margin-top: 15px;
+      text-align: center;
+      color: #222;
+      font-size: 0.85rem;
+    }
+
+    .login-link a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="registration-container">
+    <div class="tab-header">
+      <div class="tab active" id="admin-tab">Admin</div>
+      <div class="tab" id="customer-tab">Customer</div>
+    </div>
+
+    <!-- Admin Form -->
+    <form id="admin-form" class="active">
+      <label for="admin-name">Name</label>
+      <input type="text" id="admin-name" placeholder="Enter admin name" required />
+
+      <label for="admin-email">Email</label>
+      <input type="email" id="admin-email" placeholder="Enter admin email" required />
+
+      <label for="admin-username">Username</label>
+      <input type="text" id="admin-username" placeholder="Create admin username" required />
+
+      <label for="admin-password">Password</label>
+      <input type="password" id="admin-password" placeholder="Create password" required />
+
+      <label for="admin-repassword">Re-type Password</label>
+      <input type="password" id="admin-repassword" placeholder="Re-type password" required />
+
+      <button type="submit">Register as Admin</button>
+    </form>
+
+    <!-- Customer Form -->
+    <form id="customer-form">
+      <label for="customer-name">Name</label>
+      <input type="text" id="customer-name" placeholder="Enter your name" required />
+
+      <label for="customer-email">Email</label>
+      <input type="email" id="customer-email" placeholder="Enter your email" required />
+
+      <label for="customer-username">Username</label>
+      <input type="text" id="customer-username" placeholder="Create customer username" required />
+
+      <label for="customer-password">Password</label>
+      <input type="password" id="customer-password" placeholder="Create password" required />
+
+      <label for="customer-repassword">Re-type Password</label>
+      <input type="password" id="customer-repassword" placeholder="Re-type password" required />
+
+      <button type="submit">Register as Customer</button>
+    </form>
+
+    <div class="login-link">
+      Already a user? <a href="login.html">Please login</a>
+    </div>
+  </div>
+
+  <script>
+    const adminTab = document.getElementById('admin-tab');
+    const customerTab = document.getElementById('customer-tab');
+    const adminForm = document.getElementById('admin-form');
+    const customerForm = document.getElementById('customer-form');
+
+    adminTab.addEventListener('click', () => {
+      adminTab.classList.add('active');
+      customerTab.classList.remove('active');
+      adminForm.classList.add('active');
+      customerForm.classList.remove('active');
+    });
+
+    customerTab.addEventListener('click', () => {
+      customerTab.classList.add('active');
+      adminTab.classList.remove('active');
+      customerForm.classList.add('active');
+      adminForm.classList.remove('active');
+    });
+
+    adminForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const password = document.getElementById('admin-password').value;
+      const repassword = document.getElementById('admin-repassword').value;
+
+      if (password !== repassword) {
+        alert("Passwords do not match. Please re-type correctly.");
+        return;
+      }
+
+      alert("Admin registered successfully!");
+      window.location.href = "login.html";
+    });
+
+    customerForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const password = document.getElementById('customer-password').value;
+      const repassword = document.getElementById('customer-repassword').value;
+
+      if (password !== repassword) {
+        alert("Passwords do not match. Please re-type correctly.");
+        return;
+      }
+
+      alert("Customer registered successfully!");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

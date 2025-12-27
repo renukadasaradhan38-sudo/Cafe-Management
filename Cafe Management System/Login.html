@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Café Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: url('LoginBG.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding-left: 50px;
+      color: #4b2e2e;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0);
+      z-index: 0;
+    }
+    .login-container {
+      position: relative;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.151);
+      border-radius: 15px;
+      width: 380px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      border: 2px solid #d3b18a;
+      overflow: hidden;
+    }
+    .tab-header {
+      display: flex;
+    }
+    .tab-header div {
+      flex: 1;
+      text-align: center;
+      padding: 15px;
+      cursor: pointer;
+      background: #f6e6d9;
+      font-weight: bold;
+      transition: background 0.3s;
+      color: #5b3a29;
+    }
+    .tab-header .active {
+      background: #a97458;
+      color: #fff;
+    }
+    .tab-content {
+      padding: 25px;
+      min-height: 330px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 0.7s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    label {
+      margin: 10px 0 5px;
+      font-size: 0.95rem;
+      color: antiquewhite;
+    }
+    input[type="text"], input[type="password"] {
+      padding: 10px;
+      border: 1px solid #a97458;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      background: #fff;
+      color: #4b2e2e;
+    }
+    input:focus {
+      outline: none;
+      border-color: #b86e4c;
+      box-shadow: 0 0 5px #b86e4c;
+    }
+    button {
+      padding: 10px;
+      background: #a97458;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #8d5e44;
+    }
+    .message {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      text-align: center;
+      color: #ffffff;
+    }
+    .register-link {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #dadada;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .register-link:hover {
+      color: #a97458;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="login-container">
+    <div class="tab-header">
+      <div class="tab active" id="admin-tab">Admin Login</div>
+      <div class="tab" id="customer-tab">Customer Login</div>
+    </div>
+    <div class="tab-content">
+      <form id="admin-form">
+        <label for="admin-username">Username</label>
+        <input type="text" id="admin-username" required />
+        <label for="admin-password">Password</label>
+        <input type="password" id="admin-password" required />
+        <button type="submit">Login as Admin</button>
+        <div class="register-link" onclick="registerAdmin()">New admin? Register here</div>
+        <div class="message" id="admin-message"></div>
+      </form>
+      <form id="customer-form" style="display: none;">
+        <label for="customer-username">Username</label>
+        <input type="text" id="customer-username" required />
+        <label for="customer-password">Password</label>
+        <input type="password" id="customer-password" required />
+        <button type="submit">Login as Customer</button>
+        <div class="register-link" onclick="registerCustomer()">New customer? Register here</div>
+        <div class="message" id="customer-message"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const adminTab = document.getElementById('admin-tab');
+    const customerTab = document.getElementById('customer-tab');
+    const adminForm = document.getElementById('admin-form');
+    const customerForm = document.getElementById('customer-form');
+
+    adminTab.addEventListener('click', () => {
+      adminTab.classList.add('active');
+      customerTab.classList.remove('active');
+      customerForm.style.display = 'none';
+      adminForm.style.display = 'flex';
+      restartAnimation(adminForm);
+    });
+
+    customerTab.addEventListener('click', () => {
+      customerTab.classList.add('active');
+      adminTab.classList.remove('active');
+      adminForm.style.display = 'none';
+      customerForm.style.display = 'flex';
+      restartAnimation(customerForm);
+    });
+
+    function restartAnimation(form) {
+      form.style.animation = 'none';
+      void form.offsetWidth;
+      form.style.animation = 'fadeIn 0.7s ease';
+    }
+
+    // Redirect to homepage.html on login
+    adminForm.addEventListener('submit', e => {
+      e.preventDefault();
+      window.location.href = "homepage.html";
+    });
+
+    customerForm.addEventListener('submit', e => {
+      e.preventDefault();
+      window.location.href = "homepage.html";
+    });
+
+    function registerAdmin() {
+      window.location.href = "Registration.html";
+    }
+
+    function registerCustomer() {
+      window.location.href = "Registration.html";
+    }
+  </script>
+</body>
+</html>

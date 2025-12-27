@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>Cozy Café</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+      background: #fff8f0;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #3e2c1c;
+      color: #fff;
+      padding: 1rem 0;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    nav a {
+      color: #fff;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease, border-bottom 0.3s ease;
+    }
+
+    nav a i {
+      margin-right: 6px;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    nav a:hover i {
+      transform: scale(1.2);
+      color: #ff914d;
+    }
+
+    nav a {
+      position: relative;
+      display: inline-block;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: #ff914d;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      background: url(coffee.jpeg) no-repeat center center/cover;
+      height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+      padding: 0 2rem;
+    }
+
+    .hero-content h2 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content .btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.75rem 2rem;
+      background: #ff914d;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    #topBtn {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      background-color: #ff914d;
+      color: white;
+      cursor: pointer;
+      padding: 12px 16px;
+      border-radius: 50%;
+      transition: background-color 0.3s ease;
+    }
+
+    #topBtn:hover {
+      background-color: #e76e2d;
+    }
+
+    .menu-preview {
+      background: #fff;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .menu-preview h2 {
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      color: #3e2c1c;
+    }
+
+    .menu-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .menu-card {
+      background: #fdf3e7;
+      padding: 1rem;
+      border-radius: 10px;
+      width: 250px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .menu-card:hover {
+      transform: scale(1.05);
+    }
+
+    .menu-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-card h3 {
+      color: #3e2c1c;
+      margin-bottom: 0.5rem;
+    }
+
+    .about {
+      background: #fff8f0;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin: 2rem auto;
+      max-width: 1200px;
+    }
+
+    .about .heading {
+      text-align: center;
+      font-size: 2rem;
+      color: #3e2c1c;
+      margin-bottom: 1.5rem;
+    }
+
+   .about .heading span {
+      color: #ff914d;
+    }
+
+   .about-row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .about-video {
+      flex: 1 1 40%;
+      position: relative;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .about-video video {
+       width: 100%;
+       height: auto;
+       border-radius: 10px;
+       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .about-video h3 {
+       position: absolute;
+       bottom: 10px;
+       left: 10px;
+       color: #fff;
+       font-size: 1.2rem;
+       background: rgba(0, 0, 0, 0.5);
+       padding: 0.3rem 0.8rem;
+       border-radius: 4px;
+    }
+
+    .about-text {
+       flex: 1 1 55%;
+    }
+
+    .about-text h3 {
+       font-size: 1.5rem;
+       color: #3e2c1c;
+       margin-bottom: 0.8rem;
+    }
+
+    .about-text p {
+       font-size: 1rem;
+       color: #444;
+       line-height: 1.6;
+       margin-bottom: 1rem;
+    }
+
+    .about-text .btn {
+      background: #ff914d;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .about-text .btn:hover {
+       background: #e76e2d;
+     }
+    .heading {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #3e2c1c;
+      margin-bottom: 2rem;
+      font-weight: bold;
+    }
+
+   .heading span {
+      color: #ff914d;
+    }
+
+    .contact-section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+      display: flex;
+      gap: 2rem;
+      background-color: #fff8f0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    .contact-form, .contact-info {
+      flex: 1 1 45%;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .contact-form {
+      background-color: #fff;
+    }
+
+    .contact-info {
+      background-color: #fff0e6;
+    }
+
+    .contact-form h2, .contact-info h2 {
+      margin-bottom: 1rem;
+      color: #3e2c1c;
+    }
+
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .contact-form button {
+      padding: 0.7rem 1.5rem;
+      background-color: #ff914d;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .contact-form button:hover {
+      background-color: #e76e2d;
+    }
+
+    .contact-info p {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: #444;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 1.5rem;
+    }
+
+    .social-icons a {
+      text-decoration: none;
+      color: #3e2c1c;
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: #ff914d;
+    }
+
+    .success-message {
+      color: #28a745;
+      font-weight: bold;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .contact-section {
+        flex-direction: column;
+      }
+    }
+    footer {
+        background-color: #3e2c1c; 
+        color: white;
+        padding: 30px 0;
+        font-family: Arial, sans-serif;
+    }
+
+    footer .container {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    footer .footer-row {
+       display: flex;
+       justify-content: space-between;
+       flex-wrap: wrap;
+       gap: 30px;
+    }
+
+    footer .footer-section {
+      flex: 1;
+      min-width: 250px;
+      max-width: 33%; 
+    }
+
+    footer .footer-section h4 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #FFD700; 
+      transition: color 0.3s ease; 
+    }
+
+    footer .footer-section h4:hover {
+      color: #FF6347; 
+    }
+
+    footer .footer-section p, footer .footer-section ul {
+     font-size: 14px;
+    }
+
+    footer .footer-section a {
+     color: #f0f0f0;
+     text-decoration: none;
+     position: relative;
+     transition: color 0.3s ease, padding-left 0.3s ease;
+    }
+
+    footer .footer-section a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #FFD700;
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+
+    footer .footer-section a:hover {
+      color: #FFD700; 
+      padding-left: 10px; 
+    }
+
+    footer .footer-section a:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+
+    footer .footer-section ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    footer .footer-section ul li {
+       margin: 5px 0;
+    }
+
+    footer .footer-section ul li:hover {
+       color: #FFD700; 
+       cursor: pointer;
+    }
+
+    footer .footer-bottom {
+       text-align: center;
+       margin-top: 20px;
+       font-size: 14px;
+    }
+
+    footer .footer-bottom p {
+       color: #ccc;
+    }
+
+@media (max-width: 768px) {
+  footer .footer-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  footer .footer-section {
+    max-width: 100%; 
+    margin-bottom: 20px;
+  }
+
+  footer .footer-bottom {
+    font-size: 12px; 
+  }
+}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Cozy Café</h1>
+      <nav>
+        <a href="homepage.html"><i class="fas fa-home"></i>Home</a>
+        <a href="#menu"><i class="fas fa-mug-hot"></i>Menu</a>
+        <a href="#about"><i class="fas fa-info-circle"></i>About</a>
+        <a href="#contact"><i class="fas fa-envelope"></i>Contact</a>
+        <a href="#"><i class="fas fa-sign-in-alt"></i>Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Welcome to Cozy Café</h2>
+      <p>Your daily dose of warmth, coffee, and comfort.</p>
+      <a href="#menu" class="btn">View Menu</a>
+    </div>
+  </section>
+
+  <button onclick="scrollToTop()" id="topBtn" title="Go to top">↑</button>
+
+  <section id="menu" class="menu-preview">
+    <h1 class="heading"><span>Our</span> Favorites</h1>
+    <div class="menu-items" id="menuContainer">
+      <div class="menu-items">
+        <div class="menu-card">
+          <img src="espresso.jpg" alt="Espresso">
+          <h3>Espresso</h3>
+          <p>Strong and bold shot of love.</p>
+        </div>
+        <div class="menu-card">
+          <img src="croissant.jpg" alt="Croissant">
+          <h3>Croissant</h3>
+          <p>Buttery and flaky, baked fresh daily.</p>
+        </div>
+        <div class="menu-card">
+          <img src="latte.jpg" alt="Latte">
+          <h3>Latte</h3>
+          <p>Smooth coffee with a creamy touch.</p>
+        </div>
+        <div class="menu-card">
+          <img src="mocha.jpg" alt="Mocha">
+          <h3>Mocha</h3>
+          <p>A rich blend of chocolate and espresso.</p>
+        </div>
+        <div class="menu-card">
+          <img src="muffin.jpg" alt="Blueberry Muffin">
+          <h3>Blueberry Muffin</h3>
+          <p>Soft, fluffy, and bursting with berries.</p>
+        </div>
+        <div class="menu-card">
+          <img src="chai.jpg" alt="Chai">
+          <h3>Chai</h3>
+          <p>Aromatic spices brewed with steamed milk.</p>
+        </div>
+        <div class="menu-card">
+          <img src="cappuccino.jpg" alt="Cappuccino">
+          <h3>Cappuccino</h3>
+          <p>Rich espresso with frothy milk.</p>
+        </div>
+        <div class="menu-card">
+          <img src="bannabread.jpg" alt="Banana Bread">
+          <h3>Banana Bread</h3>
+          <p>Moist and flavorful, a classic treat.</p>
+        </div>
+        <div class="menu-card">
+          <img src="iced.jpg" alt="Iced Coffee">
+          <h3>Iced Coffee</h3>
+          <p>Cool and refreshing.</p>
+        </div>
+        <div class="menu-card">
+          <img src="chocodonut.jpg" alt="Chocolate Donut">
+          <h3>Chocolate Donut</h3>
+          <p>A sweet indulgence.</p>
+        </div>
+        <div class="menu-card">
+          <img src="matcha.jpg" alt="Matcha Latte">
+          <h3>Matcha Latte</h3>
+          <p>Green tea with creamy milk.</p>
+        </div>
+        <div class="menu-card">
+          <img src="strawberry.jpg" alt="Strawberry Tart">
+          <h3>Strawberry Tart</h3>
+          <p>Fruity, fresh, and flaky.</p>
+        </div>
+        <div class="menu-card">
+          <img src="cinnamon.jpg" alt="Cinnamon Roll">
+          <h3>Cinnamon Roll</h3>
+          <p>Warm and gooey with icing.</p>
+        </div>
+        <div class="menu-card">
+          <img src="flat.jpg" alt="Flat White">
+          <h3>Flat White</h3>
+          <p>Velvety smooth espresso blend.</p>
+        </div>
+        <div class="menu-card">
+          <img src="carrot.jpg" alt="Carrot Cake">
+          <h3>Carrot Cake</h3>
+          <p>Moist layers with creamy frosting.</p>
+        </div>
+        <div class="menu-card">
+          <img src="herbal.jpg" alt="Herbal Tea">
+          <h3>Herbal Tea</h3>
+          <p>Caffeine-free and calming.</p>
+        </div>
+        <div class="menu-card">
+          <img src="pumpkin.jpg" alt="Pumpkin Spice Latte">
+          <h3>Pumpkin Spice Latte</h3>
+          <p>A fall favorite.</p>
+        </div>
+        <div class="menu-card">
+          <img src="toffee.jpg" alt="Toffee Nut Latte">
+          <h3>Toffee Nut Latte</h3>
+          <p>Sweet, nutty, and creamy.</p>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <h1 class="heading"><span>About</span> us</h1>
+  
+    <div class="about-row">
+        <div class="about-video">
+          <video src="coffeevdo.mp4" autoplay muted loop></video>
+          <h3>cozy vibes & great coffee</h3>
+        </div>
+        <div class="about-text">
+          <p>
+            At Cozy Café, we believe every cup tells a story. Nestled in the heart of the city, our café is a haven for coffee lovers and comfort seekers alike. We serve more than just drinks — we serve moments of calm in a busy world.
+          </p>
+          <p>
+            Our beans are ethically sourced and expertly brewed to bring out the richest flavors in every sip. Pair your drink with our freshly baked pastries, and you'll understand why our customers keep coming back.
+          </p>
+          <p>
+            Whether you're working remotely, catching up with friends, or enjoying a quiet moment alone, our warm ambiance and free Wi-Fi make Cozy Café the perfect escape. Come experience the charm of local hospitality — one cup at a time.
+          </p>
+          
+        </div>
+      </div>
+      
+  </section>
+  
+  <section class="contact-section" id="contact">
+    
+    <div class="contact-form">
+      <h2 class="heading"><span>Contact</span> us</h2>
+      <form id="contactForm" onsubmit="return handleSubmit(event)">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" required />
+        <textarea rows="5" id="message" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      
+    </div>
+
+    
+    <div class="contact-info">
+      <h2 class="heading"><span>Visit</span> us</h2>
+      <p><strong>Cozy Café</strong></p>
+      <p>📍 123 Brew Street, Bean Town, CA 90210</p>
+      <p>📞 (123) 456-7890</p>
+      <p>✉️ hello@cozycafe.com</p>
+      <h2 class="heading"><span>Follow</span> us</h2>
+
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+        <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+        <a href="#"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-row">
+        <div class="footer-section">
+            <h4>Our Story</h4>
+            <p>At Cozy Café, we blend passion with flavor, creating the perfect atmosphere for relaxation and delicious food.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Our Specials</h4>
+          <ul>
+            <li>☕ Daily Brewed Coffee</li>
+            <li>🍰 Freshly Baked Pastries</li>
+            <li>🥐 Croissant & Sandwiches</li>
+            <li>🍵 Organic Teas</li>
+          </ul>
+        </div>
+       
+        <div class="footer-section">
+          <h4>Opening Hours</h4>
+          <ul>
+            <li>Monday - Friday: 8:00 AM - 6:00 PM</li>
+            <li>Saturday: 9:00 AM - 5:00 PM</li>
+            <li>Sunday: Closed</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Cozy Café | All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+  </footer>
+
+  <script>
+     window.onscroll = function () {
+      const btn = document.getElementById("topBtn");
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        btn.style.display = "block";
+      } else {
+        btn.style.display = "none";
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function handleSubmit(event) {
+    event.preventDefault();
+    alert("Thank you for your feedback! Your message has been sent.");
+    document.getElementById("contactForm").reset();
+  }
+  </script>
+</body>
+</html>
